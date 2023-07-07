@@ -1,0 +1,51 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ .Values.name }}
+  namespace: {{ .Values.namespace }}
+type: Opaque
+stringData:
+  {{- range $key, $value := .Values.credentials }}
+  {{ $key }}: {{ $value }}
+  {{- end }}
+---
+apiVersion: dns.gardener.cloud/v1alpha1
+kind: DNSProvider
+metadata:
+  {{- if or .Values.dnsclass .Values.allowRemoteAccess }}
+  annotations:
+    {{- if .Values.dnsclass }}
+    dns.gardener.cloud/class: {{- .Values.dnsclass }}
+    {{- end }}
+    {{- if .Values.allowRemoteAccess }}
+    dns.gardener.cloud/remote-access: "true"
+    {{- end }}
+  {{ end }}
+  labels:
+    app.kubernetes.io/managed-by: landscape-setup
+    landscape.gardener.cloud/component-name: dns-management
+  name: {{ .Values.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  type: {{ .Values.type }}
+  {{- if or .Values.includeDomains .Values.excludeDomains  }}
+  domains:
+    {{- if .Values.includeDomains }}
+    include: {{ .Values.includeDomains | toYaml | nindent 4}}
+    {{- end }}
+    {{ if .Values.excludeDomains }}
+    exclude: {{ .Values.excludeDomains | toYaml | nindent 4}}
+    {{- end }}
+  {{- end }}
+  {{- if or .Values.includeZones .Values.excludeZones }}
+  zones:
+    {{- if .Values.includeZones }}
+    include: {{ .Values.includeZones | toYaml | nindent 4}}
+    {{- end }}
+    {{ if .Values.excludeZones }}
+    exclude: {{ .Values.excludeZones | toYaml | nindent 4}}
+    {{- end }}
+  {{- end }}
+  secretRef:
+    name: {{ .Values.name }}

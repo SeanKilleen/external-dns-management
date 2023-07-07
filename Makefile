@@ -102,3 +102,6 @@ cnudie-docker-all: cnudie-docker-images cnudie-docker-push
 .PHONY: cnudie-cd-build-push
 cnudie-cd-build-push:
 	@EFFECTIVE_VERSION=$(EFFECTIVE_VERSION) ./hack/generate-cd.sh
+
+installer-cd-build-push:
+	@EFFECTIVE_VERSION=$(EFFECTIVE_VERSION) ./hack/generate-cd-installer.sh
