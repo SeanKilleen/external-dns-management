@@ -118,7 +118,7 @@ def deploy(params):
                 errors.append(err)
             else:
                 _, err = helm_upgrade(
-                    path="resources/charts",
+                    path="resources/charts/external-dns-management",
                     namespace=namespace,
                     create_namespace=True,
                     release="external-dns-management",
