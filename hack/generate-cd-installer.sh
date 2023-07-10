@@ -22,5 +22,5 @@ EOF
 
 echo "> Creating component descriptor and pushing it"
 
-ginst comp create --repository ${CD_REGISTRY} --source "${SOURCE_PATH}/.installer"  --internal-images ${RESOURCES_FILE_PATH}
+ginst comp create --repository ${CD_REGISTRY} --source "${SOURCE_PATH}/.installer"  --internal-images ${RESOURCES_FILE_PATH} -v
 
