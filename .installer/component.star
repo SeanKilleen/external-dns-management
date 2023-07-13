@@ -1,5 +1,4 @@
 name = "dns-management"
-ocm_name = "github.com/gardener/external-dns-management"
 version = version_file("VERSION")
 
 dependencies = {
