@@ -104,4 +104,4 @@ cnudie-cd-build-push:
 	@EFFECTIVE_VERSION=$(EFFECTIVE_VERSION) ./hack/generate-cd.sh
 
 installer-cd-build-push:
-	@EFFECTIVE_VERSION=$(EFFECTIVE_VERSION) ./hack/generate-cd-installer.sh
+	@EFFECTIVE_VERSION=$(EFFECTIVE_VERSION) PROJECT=$(PROJECT) ./hack/generate-cd-installer.sh

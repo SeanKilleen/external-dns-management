@@ -137,7 +137,7 @@ def deploy(params):
             if err:
                 errors.append(err)
                 continue
-            tmp_file = write_tempfile(single_file_helm_template("resources/dns-provider.yaml", provider))
+            tmp_file = write_tempfile(helm_template(template="resources/dns-provider.yaml", values=provider))
             _, err = kubectl_apply("-f", tmp_file, update_state=True)
             if err:
                 errors.append(err)

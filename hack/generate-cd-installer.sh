@@ -9,6 +9,7 @@ set -e
 SOURCE_PATH="$(dirname $0)/.."
 IMAGE_REGISTRY="$(${SOURCE_PATH}/hack/get-image-registry.sh)"
 CD_REGISTRY="$(${SOURCE_PATH}/hack/get-cd-registry-installer.sh)"
+GINST="${GARDENER_INSTALLER:-ginst}"
 
 echo "> Adding image of dns-controller-manager"
 RESOURCES_BASE_PATH="$(mktemp -d)"
@@ -22,5 +23,6 @@ EOF
 
 echo "> Creating component descriptor and pushing it"
 
-ginst comp create --repository ${CD_REGISTRY} --source "${SOURCE_PATH}/.installer"  --internal-images ${RESOURCES_FILE_PATH} -v
+echo "using $GINST"
+$GINST comp create --ocm-name ${PROJECT} --repository ${CD_REGISTRY} --source "${SOURCE_PATH}/.installer"  --internal-images ${RESOURCES_FILE_PATH} -v
 
