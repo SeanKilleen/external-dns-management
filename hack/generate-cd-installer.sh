@@ -9,7 +9,7 @@ set -e
 SOURCE_PATH="$(dirname $0)/.."
 IMAGE_REGISTRY="$(${SOURCE_PATH}/hack/get-image-registry.sh)"
 CD_REGISTRY="$(${SOURCE_PATH}/hack/get-cd-registry-installer.sh)"
-GINST="${GARDENER_INSTALLER:-ginst}"
+GINST="${GARDENER_INSTALLER_CLI:-ginst}"
 
 echo "> Adding image of dns-controller-manager"
 RESOURCES_BASE_PATH="$(mktemp -d)"
