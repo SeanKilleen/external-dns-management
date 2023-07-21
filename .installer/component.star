@@ -142,4 +142,12 @@ def deploy(params):
             if err:
                 errors.append(err)
 
+        # waiting for DNS providers
+        # TODO: disable during soil bootstrapping
+        print("Waiting for DNS providers to become ready in cluster {} of type {} ...".format(dns_cfg.cluster.name, dns_cfg.cluster.type))
+        _, err = kubectl_wait("dnsprovider -l app.kubernetes.io/managed-by=landscape-setup,landscape.gardener.cloud/component-name=dns-management --for=jsonpath={'status.state'}=Ready --all-namespaces --timeout=90s")
+        if err:
+            errors.append(err)
+
+
     return (None, errors)
