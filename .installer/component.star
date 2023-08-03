@@ -132,11 +132,13 @@ def deploy(params):
 
 
         # render and deploy providers
+        print("Deploying DNS providers in cluster {} of type {} ...".format(dns_cfg.cluster.name, dns_cfg.cluster.type))
         for p in dns_cfg.providers:
             provider, err = new_provider(p, params.imports.users, dns_cfg.get("dnsclass"))
             if err:
                 errors.append(err)
                 continue
+            print("- DNSProvider {}/{}".format(provider.namespace, provider.name))
             tmp_file = write_tempfile(helm_template(template="resources/dns-provider.yaml", values=provider))
             _, err = kubectl_apply("-f", tmp_file, update_state=True)
             if err:
